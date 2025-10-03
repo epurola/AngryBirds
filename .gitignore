@@ -21,7 +21,7 @@ Makefile
 *.dll
 *.log
 
-.vs/
+/.vs/
 .vccode
 *.vcxproj.*
 *.vcxproj.user

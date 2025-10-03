@@ -34,7 +34,7 @@ add_executable(AngryBirds
     src1/Slingshot.cpp
     src1/Camera.cpp
     
-)
+ "src/main.cpp")
 
 # Include headers
 target_include_directories(AngryBirds PRIVATE

@@ -15,7 +15,7 @@ bool Enemy::alive() const
 void Enemy::kill()
 {
     if (!alive_) return;
-
+     
     alive_ = false;
     active_ = false;
     world_.DestroyBody(body_); // Currently they die if speed is enough so one of them dies instantly since it is falling
