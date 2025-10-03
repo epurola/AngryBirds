@@ -1,0 +1,56 @@
+cmake_minimum_required(VERSION 3.16)
+project(AngryBirds LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Add Box2D submodule v2.4.1
+set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "" FORCE)
+set(BOX2D_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(BOX2D_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+add_subdirectory(vendor/box2d)
+
+# Add SFML submodule 
+set(SFML_BUILD_AUDIO OFF CACHE BOOL "" FORCE)
+set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(SFML_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(SFML_USE_SYSTEM_FREETYPE ON CACHE BOOL "" FORCE)  
+set(SFML_USE_SYSTEM_VORBIS ON CACHE BOOL "" FORCE)
+add_subdirectory(vendor/SFML)
+
+# Add main executable
+add_executable(AngryBirds 
+    src1/main.cpp
+    src1/Game.cpp
+    src1/Level.cpp
+    src1/Bird.cpp
+    src1/Castle.cpp
+    src1/Enemy.cpp
+    src1/Physics.cpp
+    src1/Block.cpp
+    src1/UI.cpp
+    src1/RectangleEntity.cpp
+    src1/CircleEntity.cpp
+    src1/Slingshot.cpp
+    src1/Camera.cpp
+    
+)
+
+# Include headers
+target_include_directories(AngryBirds PRIVATE
+    src
+    vendor/box2d/include    
+    vendor/SFML/include   
+)
+
+
+target_link_libraries(AngryBirds PRIVATE sfml-graphics sfml-window sfml-system box2d)
+
+
+
+
+enable_testing()
+# add_subdirectory(tests)
+
+
+
