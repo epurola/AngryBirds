@@ -31,7 +31,7 @@ Makefile
 *.sdf
 
 
-/src1/
+#src1/
 
 
 *.tmp
