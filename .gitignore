@@ -22,6 +22,7 @@ Makefile
 *.log
 
 .vs/
+.vccode
 *.vcxproj.*
 *.vcxproj.user
 *.suo
