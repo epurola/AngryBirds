@@ -46,8 +46,13 @@ target_include_directories(AngryBirds PRIVATE
 
 target_link_libraries(AngryBirds PRIVATE sfml-graphics sfml-window sfml-system box2d)
 
+add_custom_target(copy_assets ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/assets
+            ${CMAKE_CURRENT_BINARY_DIR}/assets
+)
 
-
+add_dependencies(AngryBirds copy_assets)
 
 enable_testing()
 # add_subdirectory(tests)

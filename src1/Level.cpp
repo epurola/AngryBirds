@@ -1,4 +1,5 @@
 #include "Level.h"
+#include <filesystem>
 
 Level::Level(b2World& world, Physics& physics, Layout& layout, const std::string &file)
     : physics_(physics), layout_(layout), currentBird_(0), slingshot_({layout_.slingshotOffsetX, 575 })
@@ -22,13 +23,21 @@ sf::Vector2f lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t){
     return a + t * (b - a);
 }
 
+std::filesystem::path getResourcePath(const std::string& filename) {
+
+    std::filesystem::path exePath = std::filesystem::current_path();
+
+    std::filesystem::path resourcePath = exePath / "assets" / "textures" / filename;
+    return resourcePath;
+}
+
 void Level::load(const std::string& file){
     //Parse file to create birds and so on
 
-    birdTexture_.loadFromFile("../../../assets/textures/bird.png");
-    birdTexture2_.loadFromFile("../../../assets/textures/bird2.png");
-    pigTexture_.loadFromFile("../../../assets/textures/pig.png");
-    bg_.loadFromFile("../../../assets/textures/ogbg.png");
+    birdTexture_.loadFromFile(getResourcePath("bird.png").string());
+    birdTexture2_.loadFromFile(getResourcePath("bird2.png").string());
+    pigTexture_.loadFromFile(getResourcePath("pig.png").string());
+    bg_.loadFromFile(getResourcePath("ogbg.png").string());
 
     bgSprite_.setTexture(bg_);
     
