@@ -34,7 +34,7 @@ add_executable(AngryBirds
     src1/Slingshot.cpp
     src1/Camera.cpp
     
- "src/main.cpp")
+ "src/main.cpp" "src1/ContactListener.h")
 
 # Include headers
 target_include_directories(AngryBirds PRIVATE
@@ -46,6 +46,7 @@ target_include_directories(AngryBirds PRIVATE
 
 target_link_libraries(AngryBirds PRIVATE sfml-graphics sfml-window sfml-system box2d)
 
+# Copy assests next to the executable in to assest folder
 add_custom_target(copy_assets ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${CMAKE_SOURCE_DIR}/assets

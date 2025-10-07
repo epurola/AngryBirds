@@ -16,17 +16,16 @@ Level::Level(b2World& world, Physics& physics, Layout& layout, const std::string
 
 Level::~Level()
 {
-    //Cleanup...
+
 }
 
 sf::Vector2f lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t){
     return a + t * (b - a);
 }
 
-std::filesystem::path getResourcePath(const std::string& filename) {
+static std::filesystem::path getResourcePath(const std::string& filename)  {
 
     std::filesystem::path exePath = std::filesystem::current_path();
-
     std::filesystem::path resourcePath = exePath / "assets" / "textures" / filename;
     return resourcePath;
 }
@@ -53,7 +52,11 @@ void Level::load(const std::string& file){
     birds_.emplace_back(physics_.get_world(), sf::Vector2f(120.f, 500.f),&birdTexture2_,20);
     birds_.emplace_back(physics_.get_world(), sf::Vector2f(160.f, 500.f),&birdTexture_,20);
     enemies_.emplace_back(physics_.get_world(), sf::Vector2f(700.f, 500.f ),&pigTexture_);
-    enemies_.emplace_back(physics_.get_world(), sf::Vector2f(900.f, 500.f ),&pigTexture_);
+    enemies_.emplace_back(physics_.get_world(), sf::Vector2f(900.f, 700.f ),&pigTexture_);
+
+    for (auto& enemy : enemies_) {
+        enemy.body()->GetUserData().pointer = reinterpret_cast<uintptr_t>(&enemy);
+    }
 
     slingshot_.attach_bird(&birds_[currentBird_]);
 
@@ -68,13 +71,12 @@ void Level::update(float delta, Camera& camera){
     castle_.update(delta);
 
     for (auto& enemy : enemies_) {
+         enemy.update(delta);
 
-        enemy.update(delta);
-
-        float speed = enemy.body()->GetLinearVelocity().Length();
-        if (speed > 0.8) {   
-            enemy.kill();
-        }
+      //  float speed = enemy.body()->GetLinearVelocity().Length();
+       // if (speed > 0.8) {   
+       //     enemy.kill();
+       // }
     }
 
     camera.update(delta);
@@ -92,6 +94,8 @@ void Level::update(float delta, Camera& camera){
             slingshot_.attach_bird(&birds_[currentBird_]);
             b2Vec2 pos = birds_[currentBird_].body()->GetPosition();
             camera.follow_bird({ pos.x * layout_.scale, 384.f + 25.f }); // y = screen height / 2
+
+            camera.zoom_out();
         }
     }
 }

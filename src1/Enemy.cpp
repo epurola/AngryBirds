@@ -18,24 +18,27 @@ void Enemy::kill()
      
     alive_ = false;
     active_ = false;
-    world_.DestroyBody(body_); // Currently they die if speed is enough so one of them dies instantly since it is falling
+    pendingDestroy_ = true;
+    std::cout << "Enemy scheduled for destruction\n";
+      // Currently they die if speed is enough so one of them dies instantly since it is falling
 }
 
 void Enemy::update(float delta)
 {
     if (!alive_) {
-    
-        float t = deathTimer_.getElapsedTime().asSeconds();
-        float scale = 1.f + t * 2.f; 
-        shape_.setScale(scale, scale);
-        shape_.setFillColor(sf::Color(255, 255, 255, std::max(0, int(255 * (1.f - t)))));
-
-        if (t > 0.5f) {
-            set_active(false); 
+        if (pendingDestroy_) {
+            world_.DestroyBody(body_);
+            pendingDestroy_ = false;
         }
     }
     else {
-   
         CircleEntity::update(delta);
     }
+}
+
+void Enemy::render(sf::RenderWindow& window)
+{
+    if (!alive_) return;
+
+    window.draw(shape_);
 }

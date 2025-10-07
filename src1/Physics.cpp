@@ -2,7 +2,7 @@
 
 Physics::Physics() : world_(b2Vec2(0.0f, 9.8f))
 {
-
+    world_.SetContactListener(&contactListener_);
 }
 
 void Physics::step(float delta)

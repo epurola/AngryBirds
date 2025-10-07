@@ -18,7 +18,7 @@ RectangleEntity::RectangleEntity(b2World &world, sf::Vector2f size, sf::Vector2f
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &boxShape;
-    fixtureDef.density = dynamic ? 1.f : 0.f;
+    fixtureDef.density = dynamic ? 0.2f : 0.f;
     fixtureDef.friction = 0.5f;
     body_->CreateFixture(&fixtureDef);
 }

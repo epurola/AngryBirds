@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "CircleEntity.h"
+#include <iostream>
 
 class Enemy : public CircleEntity{
 public:
@@ -11,9 +12,12 @@ public:
 
     void update(float delta) override;
 
+    void render(sf::RenderWindow& window) override;
+
 
 private:
     bool alive_;
+    bool pendingDestroy_ = false;;
     float radius_;
     const float SCALE_ = 30.f;
     sf::Clock deathTimer_;
